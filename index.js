@@ -1,49 +1,44 @@
-const markdownIt = require('markdown-it');
-const outdent = require('outdent');
+const loaderUtils = require('loader-utils');
 const hash = require('hash-sum');
-const demoSelectorLoader = require.resolve('./demo-selector');
-
-const vueCodeBlockPtrn = '```vue\\n((?:.|\\n)*?)```';
-
-const vueLoader = require.resolve('vue-loader');
-function genImportStmt(compName, idx) {
-	return `import ${compName} from '!!${vueLoader}!${demoSelectorLoader}?idx=${idx}!${this.resourcePath}';`;
-}
+const DemosParser = require('./DemosParser');
+const MdVue = require('./MdVue');
 
 const cache = new Map();
 
-function MDVueLoader(src) {
-	console.log('mdvue-loader from', this.resourcePath, this.resourceQuery);
-	const key = hash(src);
+module.exports = function MDVueLoader(markdownSrc) {
+	const params = this.resourceQuery ? loaderUtils.parseQuery(this.resourceQuery) : {};
+
+	if (params.hasOwnProperty('mdvue-demo') || params.hasOwnProperty('mdvue-file')) {
+		const demos = new DemosParser({
+			markdownSrc,
+			resourcePath: this.resourcePath,
+		});
+
+		if (params.hasOwnProperty('mdvue-demo')) {
+			return demos.findDemoByIdx(+params['mdvue-demo']);
+		}
+
+		if (params.hasOwnProperty('mdvue-file')) {
+			return demos.findDemoByFileName(params['mdvue-file']);
+		}
+	}
+
+	const opts = loaderUtils.getOptions(this);
+	const key = hash(markdownSrc + JSON.stringify(opts));
+
 	if (cache.has(key)) {
 		return cache.get(key);
 	}
 
-	const demoTags = [];
-	src = src.replace(new RegExp(vueCodeBlockPtrn, 'g'), () => {
-		const demoName = `Demo${demoTags.length}`;
-		demoTags.push(demoName);
-		return `<${demoName} />`;
+	const compiler = new MdVue({
+		...opts,
+		markdownSrc,
+		resourcePath: this.resourcePath,
 	});
 
-	const markdownHtml = markdownIt({ html: true }).render(src);
+	const compiled = compiler.toString();
 
-	const output = outdent`
-		<template>
-			<div class="markdown">${markdownHtml}</div>
-		</template>
-		<script>
-		${demoTags.map(genImportStmt.bind(this)).join('')}
-		// console.log(2, Demo0.render.toString());
-		export default {
-			components: { ${demoTags} },
-		};
-		</script>
-	`;
-	// console.log(output)
-	cache.set(key, output);
+	cache.set(key, compiled);
 
-	return output;
+	return compiled;
 };
-
-module.exports = MDVueLoader;
