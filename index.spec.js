@@ -11,7 +11,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const Vue = require('vue');
 
 
-function build(input) {
+function build(input, loaderConfig = {}) {
 	return new Promise((resolve, reject) => {
 		const mfs = new MemoryFS();
 
@@ -21,7 +21,7 @@ function build(input) {
 			mode: 'development',
 			resolveLoader: {
 				alias: {
-					'mdvue-loader': mdvueLoaderPath
+					'mdvue-loader': mdvueLoaderPath,
 				},
 			},
 			module: {
@@ -34,8 +34,29 @@ function build(input) {
 						test: /\.md$/,
 						use: [
 							'vue-loader',
-							'mdvue-loader',
+							{
+								loader: 'mdvue-loader',
+								options: loaderConfig,
+							},
 						],
+						// TODO: Eventually support
+						// Currently can't because vue-loader doesn't support 
+						// oneOf: [
+						// 	{
+						// 		resourceQuery: /codeType=vue/,
+						// 		loader: 'vue-loader',
+						// 		enforce: 'post',
+						// 	},
+						// 	{
+						// 		use: [
+						// 			'vue-loader',
+						// 			{
+						// 				loader: 'mdvue-loader',
+						// 				options: {}
+						// 			},
+						// 		],
+						// 	},
+						// ],
 					},
 				],
 			},
@@ -88,29 +109,132 @@ function run(src) {
 	// `)
 
 
-// test('Build markdown', async () => {
-// 	const built = await build(outdent`
-// 		# Hello
-// 		Hello world
-// 	`);
-// 	const vnode = run(built);
-
-// 	expect(vnode.tag).toBe('div');
-// 	expect(vnode.children[0].tag).toBe('h1');
-// 	expect(vnode.children[0].children[0].text).toBe('Hello');
-// });
-
-
 
 test('Build markdown', async () => {
 	const built = await build(outdent`
 		# Hello
 		Hello world
+	`);
+	const vnode = run(built);
+
+	expect(vnode.tag).toBe('div');
+	expect(vnode.children[0].tag).toBe('h1');
+	expect(vnode.children[0].children[0].text).toBe('Hello');
+});
+
+
+test('Build markdown with codeblock', async () => {
+	const built = await build(outdent`
+		# Hello
+		Hello world
 
 		\`\`\`vue
-		helloworld
+		<template>
+			<div>Hello</div>
+		</template>
+		\`\`\`
+
+		\`\`\`vue
+		<template>
+			<div>Good bye</div>
+		</template>
 		\`\`\`
 	`);
+	const vnode = run(built);
+
+	expect(vnode.tag).toBe('div');
+	expect(vnode.children[0].tag).toBe('h1');
+	expect(vnode.children[0].children[0].text).toBe('Hello');
+});
+
+test('Build markdown with demo', async () => {
+	const built = await build(outdent`
+		# Hello
+		Hello world
+
+		\`\`\`vue
+		<template>
+			<div>Hello</div>
+		</template>
+		\`\`\`
+
+		\`\`\`vue
+		<template>
+			<div>Good bye</div>
+		</template>
+		\`\`\`
+	`, {
+		buildDemos: true
+	});
+	const vnode = run(built);
+
+	expect(vnode.tag).toBe('div');
+	expect(vnode.children[0].tag).toBe('h1');
+	expect(vnode.children[0].children[0].text).toBe('Hello');
+});
+
+test('Build markdown with doc file imports', async () => {
+	const built = await build(outdent`
+		# Hello
+		Hello world
+
+		\`\`\`vue
+		<template>
+			<div>Hello</div>
+		</template>
+		<script>
+		import Goodbye from 'doc/Goodbye.vue';
+
+		export default {};
+		</script>
+		\`\`\`
+
+		_Goodbye.vue_
+		\`\`\`vue
+		<template>
+			<div>Good bye</div>
+		</template>
+		\`\`\`
+
+
+		\`\`\`vue
+		<template>
+			<div>Hello</div>
+		</template>
+		<script>
+		import Goodbye from 'doc/Goodbye.vue';
+
+		export default {};
+		</script>
+		\`\`\`
+	`, {
+		buildDemos: true
+	});
+	const vnode = run(built);
+
+	expect(vnode.tag).toBe('div');
+	expect(vnode.children[0].tag).toBe('h1');
+	expect(vnode.children[0].children[0].text).toBe('Hello');
+});
+
+
+test('Build markdown with buildDemos function', async () => {
+	const built = await build(outdent`
+		# Hello
+		Hello world
+
+		\`\`\`vue
+		<template>
+			<div>Hello</div>
+		</template>
+		\`\`\`
+	`, {
+		buildDemos(demoTag, files) {
+			console.log('buildDemos');
+
+			return demoTag;
+		},
+	});
 	const vnode = run(built);
 
 	expect(vnode.tag).toBe('div');
