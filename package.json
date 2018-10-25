@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/hirokiosame/mdvue-loader.git"
   },
-  "author": "",
+  "author": "Hiroki Osame",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hirokiosame/mdvue-loader/issues"
