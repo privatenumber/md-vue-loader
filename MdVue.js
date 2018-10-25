@@ -2,12 +2,19 @@ const markdownIt = require('markdown-it');
 const outdent = require('outdent');
 const DemosParser = require('./DemosParser');
 const hash = require('hash-sum');
+const escapeVueChars = string => string.replace(/([<>{}])/g, (_, c) => `<span>${c}</span>`);
 
 class MdVue {
-	constructor({ markdownSrc, resourcePath, buildDemos }) {
+	constructor({
+		markdownSrc,
+		resourcePath,
+		buildDemos,
+		useVOnce,
+	}) {
 		this.markdownSrc = markdownSrc;
 		this.importStmts = new Set();
 		this.components = new Set();
+		this.useVOnce = useVOnce;
 		this.resourcePath = resourcePath;
 		this.buildDemos = buildDemos;
 	}
@@ -54,7 +61,10 @@ class MdVue {
 			this.extractDemos();
 		}
 
-		let markdownHtml = markdownIt({ html: true }).render(this.markdownSrc);
+		let markdownHtml = markdownIt({
+			html: true,
+			highlight: !this.buildDemos && ((code, type) => escapeVueChars(code)),
+		}).render(this.markdownSrc);
 
 		if (this.vueComponentInsertions) {
 			this.vueComponentInsertions.forEach((val, key) => {
@@ -66,7 +76,7 @@ class MdVue {
 
 		return outdent`
 			<template>
-				<div class="markdown">${markdownHtml}</div>
+				<div class="markdown" ${this.useVOnce ? 'v-once' : ''}>${markdownHtml}</div>
 			</template>
 			<script>
 			${importStmts}

@@ -32,6 +32,7 @@ module.exports = function MDVueLoader(markdownSrc) {
 
 	const compiler = new MdVue({
 		...opts,
+		useVOnce: this._compiler.options.mode === 'production',
 		markdownSrc,
 		resourcePath: this.resourcePath,
 	});
