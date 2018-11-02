@@ -2,7 +2,13 @@
   "name": "mdvue-loader",
   "version": "1.0.0",
   "description": "Webpack loader to import markdown files as a Vue component",
-  "keywords": ["vue", "webpack", "loader", "markdown", "md"],
+  "keywords": [
+    "vue",
+    "webpack",
+    "loader",
+    "markdown",
+    "md"
+  ],
   "main": "index.js",
   "directories": {
     "test": "test"
