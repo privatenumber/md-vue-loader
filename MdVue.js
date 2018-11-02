@@ -44,14 +44,13 @@ class MdVue {
 				const compName = `Demo${idx}`;
 				this.addComponent(compName, `${this.resourcePath}?mdvue-demo=${idx}`);
 
-				let demoTag = `<${compName} />`;
-				if (typeof this.buildDemos === 'function') {
-					demoTag = this.buildDemos.call(this, demoTag, files);
-				}
-
-				const key = hash(demoTag);
-				this.vueComponentInsertions.set(key, demoTag);
-				return `\n${key}\n`;
+				const demoTag = `<${compName} />`;
+				const placeholder = hash(demoTag);
+				this.vueComponentInsertions.set(placeholder, {
+					demoTag,
+					files,
+				});
+				return `\n${placeholder}\n`;
 			}
 		);
 	}
@@ -67,8 +66,13 @@ class MdVue {
 		}).render(this.markdownSrc);
 
 		if (this.vueComponentInsertions) {
-			this.vueComponentInsertions.forEach((val, key) => {
-				markdownHtml = markdownHtml.replace(`<p>${key}</p>`, val);
+			this.vueComponentInsertions.forEach(({ demoTag, files }, placeholder) => {
+
+				if (typeof this.buildDemos === 'function') {
+					demoTag = this.buildDemos.call(this, demoTag, files);
+				}
+
+				markdownHtml = markdownHtml.replace(`<p>${placeholder}</p>`, demoTag);
 			});
 		}
 

@@ -23,7 +23,7 @@ class DemosParser {
 
 	gatherRelatedFiles(demoSrc) {
 		const queue = [demoSrc];
-		const files = [{ src: demoSrc }];
+		const files = [{ content: demoSrc }];
 		while (queue.length) {
 			const fileSrc = queue.shift();
 			const importing = this.getImportingFiles(fileSrc);
@@ -32,7 +32,7 @@ class DemosParser {
 				const fileSrc = this.findDemoByFileName(fileName);
 				files.push({
 					name: fileName,
-					src: fileSrc,
+					content: fileSrc,
 				});
 				queue.push(fileSrc);
 			});
