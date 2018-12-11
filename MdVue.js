@@ -72,7 +72,7 @@ class MdVue {
 					demoTag = this.buildDemos.call(this, demoTag, files);
 				}
 
-				markdownHtml = markdownHtml.replace(`<p>${placeholder}</p>`, demoTag);
+				markdownHtml = markdownHtml.replace(`<p>${placeholder}</p>`, `<div>${demoTag}</div>`);
 			});
 		}
 
