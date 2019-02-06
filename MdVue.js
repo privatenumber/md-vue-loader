@@ -12,6 +12,7 @@ class MdVue {
 		useVOnce,
 		markdownItOpts,
 		markdownItPlugins,
+		markdownCSS,
 	}) {
 		this.markdownSrc = markdownSrc;
 		this.importStmts = new Set();
@@ -21,6 +22,7 @@ class MdVue {
 		this.buildDemos = buildDemos;
 		this.markdownItOpts = markdownItOpts;
 		this.markdownItPlugins = markdownItPlugins;
+		this.markdownCSS = markdownCSS;
 	}
 
 	addComponent(varName, compPath) {
@@ -92,7 +94,7 @@ class MdVue {
 
 		return outdent`
 			<template>
-				<div class="markdown" ${this.useVOnce ? 'v-once' : ''}>${markdownHtml}</div>
+				<div class="markdown-body" ${this.useVOnce ? 'v-once' : ''}>${markdownHtml}</div>
 			</template>
 			<script>
 			${importStmts}
@@ -101,6 +103,8 @@ class MdVue {
  				components: { ${Array.from(this.components)} }
 			};
 			</script>
+
+			<style scoped>${this.markdownCSS || ''}</style>
 		`;
 	}
 }
