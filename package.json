@@ -28,6 +28,7 @@
   "homepage": "https://github.com/hirokiosame/mdvue-loader#readme",
   "devDependencies": {
     "jest": "^23.5.0",
+    "markdown-it-anchor": "^5.0.2",
     "memory-fs": "^0.4.1",
     "unionfs": "^3.0.2",
     "vue": "^2.5.17",
