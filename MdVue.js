@@ -10,6 +10,9 @@ class MdVue {
 		resourcePath,
 		buildDemos,
 		useVOnce,
+		markdownItOpts,
+		markdownItPlugins,
+		markdownCSS,
 	}) {
 		this.markdownSrc = markdownSrc;
 		this.importStmts = new Set();
@@ -17,6 +20,9 @@ class MdVue {
 		this.useVOnce = useVOnce;
 		this.resourcePath = resourcePath;
 		this.buildDemos = buildDemos;
+		this.markdownItOpts = markdownItOpts;
+		this.markdownItPlugins = markdownItPlugins;
+		this.markdownCSS = markdownCSS;
 	}
 
 	addComponent(varName, compPath) {
@@ -60,10 +66,18 @@ class MdVue {
 			this.extractDemos();
 		}
 
-		let markdownHtml = markdownIt({
-			html: true,
+		const md = markdownIt({
+			...this.markdownItOpts,
 			highlight: !this.buildDemos && ((code, type) => escapeVueChars(code)),
-		}).render(this.markdownSrc);
+		});
+
+		if (this.markdownItPlugins instanceof Array) {
+			this.markdownItPlugins.forEach(([plugin, opts]) => {
+				md.use(plugin, opts);
+			});
+		}
+
+		let markdownHtml = md.render(this.markdownSrc);
 
 		if (this.vueComponentInsertions) {
 			this.vueComponentInsertions.forEach(({ demoTag, files }, placeholder) => {
@@ -80,7 +94,7 @@ class MdVue {
 
 		return outdent`
 			<template>
-				<div class="markdown" ${this.useVOnce ? 'v-once' : ''}>${markdownHtml}</div>
+				<div class="markdown-body" ${this.useVOnce ? 'v-once' : ''}>${markdownHtml}</div>
 			</template>
 			<script>
 			${importStmts}
@@ -89,6 +103,8 @@ class MdVue {
  				components: { ${Array.from(this.components)} }
 			};
 			</script>
+
+			<style scoped>${this.markdownCSS || ''}</style>
 		`;
 	}
 }
