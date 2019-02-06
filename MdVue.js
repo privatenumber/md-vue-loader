@@ -11,6 +11,7 @@ class MdVue {
 		buildDemos,
 		useVOnce,
 		markdownItOpts,
+		markdownItPlugins,
 	}) {
 		this.markdownSrc = markdownSrc;
 		this.importStmts = new Set();
@@ -19,6 +20,7 @@ class MdVue {
 		this.resourcePath = resourcePath;
 		this.buildDemos = buildDemos;
 		this.markdownItOpts = markdownItOpts;
+		this.markdownItPlugins = markdownItPlugins;
 	}
 
 	addComponent(varName, compPath) {
@@ -62,10 +64,18 @@ class MdVue {
 			this.extractDemos();
 		}
 
-		let markdownHtml = markdownIt({
+		const md = markdownIt({
 			...this.markdownItOpts,
 			highlight: !this.buildDemos && ((code, type) => escapeVueChars(code)),
-		}).render(this.markdownSrc);
+		});
+
+		if (this.markdownItPlugins instanceof Array) {
+			this.markdownItPlugins.forEach(([plugin, opts]) => {
+				md.use(plugin, opts);
+			});
+		}
+
+		let markdownHtml = md.render(this.markdownSrc);
 
 		if (this.vueComponentInsertions) {
 			this.vueComponentInsertions.forEach(({ demoTag, files }, placeholder) => {

@@ -133,6 +133,22 @@ test('Markdown-it config HTML', async () => {
 	expect(vnode.children[2].tag).toBe('div');
 });
 
+test('Markdown-it plugins', async () => {
+	const built = await build(outdent`
+		# Hello
+	`, {
+		markdownItPlugins: [
+			[require('markdown-it-anchor'), { permalink: true }]
+		],
+	});
+	const vnode = run(built);
+	expect(vnode.tag).toBe('div');
+	expect(vnode.children[0].tag).toBe('h1');
+	expect(vnode.children[0].data.attrs.id).toBe('hello');
+	expect(vnode.children[0].children[1].tag).toBe('a');
+	expect(vnode.children[0].children[1].data.attrs.href).toBe('#hello');
+});
+
 test('Build markdown with codeblock', async () => {
 	const built = await build(outdent`
 		# Hello
