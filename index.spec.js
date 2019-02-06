@@ -96,20 +96,6 @@ function run(src) {
 	return vm._vnode;
 }
 
-	// build(`# helloworld`)
-	// build(outdent`
-	// 	# helloworld
-
-	// 	\`\`\`vue
-	// 	helloworld
-	// 	\`\`\`
-	// 	\`\`\`vue
-	// 	helloworld
-	// 	\`\`\`
-	// `)
-
-
-
 test('Build markdown', async () => {
 	const built = await build(outdent`
 		# Hello
@@ -122,6 +108,30 @@ test('Build markdown', async () => {
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 });
 
+test('Markdown-it no HTML', async () => {
+	const built = await build(outdent`
+		# Hello
+		<div></div>
+	`);
+	const vnode = run(built);
+	expect(vnode.tag).toBe('div');
+	expect(vnode.children[2].tag).toBe('p');
+	expect(vnode.children[2].children[0].text).toBe('<div></div>');
+});
+
+test('Markdown-it config HTML', async () => {
+	const built = await build(outdent`
+		# Hello
+		<div></div>
+	`, {
+		markdownItOpts: {
+			html: true,
+		},
+	});
+	const vnode = run(built);
+	expect(vnode.tag).toBe('div');
+	expect(vnode.children[2].tag).toBe('div');
+});
 
 test('Build markdown with codeblock', async () => {
 	const built = await build(outdent`
@@ -146,6 +156,7 @@ test('Build markdown with codeblock', async () => {
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 });
+
 
 test('Build markdown with demo', async () => {
 	const built = await build(outdent`
@@ -230,8 +241,6 @@ test('Build markdown with buildDemos function', async () => {
 		\`\`\`
 	`, {
 		buildDemos(demoTag, files) {
-			console.log('buildDemos');
-
 			return demoTag;
 		},
 	});
@@ -241,4 +250,3 @@ test('Build markdown with buildDemos function', async () => {
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 });
-

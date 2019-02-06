@@ -10,6 +10,7 @@ class MdVue {
 		resourcePath,
 		buildDemos,
 		useVOnce,
+		markdownItOpts,
 	}) {
 		this.markdownSrc = markdownSrc;
 		this.importStmts = new Set();
@@ -17,6 +18,7 @@ class MdVue {
 		this.useVOnce = useVOnce;
 		this.resourcePath = resourcePath;
 		this.buildDemos = buildDemos;
+		this.markdownItOpts = markdownItOpts;
 	}
 
 	addComponent(varName, compPath) {
@@ -61,7 +63,7 @@ class MdVue {
 		}
 
 		let markdownHtml = markdownIt({
-			html: true,
+			...this.markdownItOpts,
 			highlight: !this.buildDemos && ((code, type) => escapeVueChars(code)),
 		}).render(this.markdownSrc);
 
