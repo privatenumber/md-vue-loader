@@ -31,7 +31,7 @@ You can inline `vue` codeblocks as inline demos by enabling the `buildDemos` opt
   loader: 'mdvue-loader',
   options: {
     buildDemos: true
-  },
+  }
 }
 ```
 
