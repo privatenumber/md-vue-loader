@@ -1,15 +1,13 @@
-const mdvueLoaderPath = require.resolve('.');
+const mdvueLoaderPath = require.resolve('..');
 
 const outdent = require('outdent');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const fs = require('fs');
 const { ufs } = require('unionfs');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const Vue = require('vue');
-
 
 function build(input, loaderConfig = {}) {
 	return new Promise((resolve, reject) => {
@@ -122,7 +120,7 @@ test('Markdown-it no HTML', async () => {
 test('Markdown-it config HTML', async () => {
 	const built = await build(outdent`
 		# Hello
-		<div></div>
+		<div>DIV Content</div>
 	`, {
 		markdownItOpts: {
 			html: true,
@@ -131,6 +129,7 @@ test('Markdown-it config HTML', async () => {
 	const vnode = run(built);
 	expect(vnode.tag).toBe('div');
 	expect(vnode.children[2].tag).toBe('div');
+	expect(vnode.children[2].children[0].text).toBe('DIV Content');
 });
 
 test('Markdown-it plugins', async () => {
@@ -171,6 +170,9 @@ test('Build markdown with codeblock', async () => {
 	expect(vnode.tag).toBe('div');
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
+
+	const codeBocks = vnode.children.filter(vnode => vnode.tag === 'pre');
+	expect(codeBocks.length).toBe(2);
 });
 
 
@@ -242,6 +244,10 @@ test('Build markdown with doc file imports', async () => {
 	expect(vnode.tag).toBe('div');
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
+
+	const demos = vnode.children.filter(vnode => vnode.tag === 'div').map(vnode => vnode.children[0]);
+	expect(demos[0].tag.endsWith('Demo0')).toBe(true);
+	expect(demos[1].tag.endsWith('Demo1')).toBe(true);
 });
 
 
