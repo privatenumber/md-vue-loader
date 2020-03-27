@@ -225,7 +225,6 @@ test('Build markdown with doc file imports', async () => {
 		</template>
 		\`\`\`
 
-
 		\`\`\`vue
 		<template>
 			<div>Hello</div>
@@ -245,13 +244,11 @@ test('Build markdown with doc file imports', async () => {
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 
-	const demos = vnode.children.filter(vnode => vnode.componentInstance);//.map(vnode => vnode.children[0]);
-	console.log(vnode.children)
-	// expect(demos.length).toBe(2);
-	// expect(demos[0].tag.endsWith('Demo0')).toBe(true);
-	// expect(demos[1].tag.endsWith('Demo1')).toBe(true);
+	const demos = vnode.children.filter(vnode => vnode.componentInstance);
+	expect(demos.length).toBe(2);
+	expect(demos[0].tag.endsWith('Demo0')).toBe(true);
+	expect(demos[1].tag.endsWith('Demo1')).toBe(true);
 });
-
 
 test('Build markdown with buildDemos function', async () => {
 	const built = await build(outdent`
