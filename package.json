@@ -13,12 +13,10 @@
   "files": [
     "lib"
   ],
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "test": "jest",
-    "dev": "jest --watchAll"
+    "dev": "jest --watchAll",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -35,6 +33,9 @@
     "markdown-it-anchor": "^5.2.5",
     "memory-fs": "^0.5.0",
     "unionfs": "^4.4.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.1",
     "vue-template-compiler": "^2.6.11",
