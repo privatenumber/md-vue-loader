@@ -171,7 +171,7 @@ test('Build markdown with codeblock', async () => {
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 
-	const codeBocks = vnode.children.filter((vnode) => vnode.tag === 'pre');
+	const codeBocks = vnode.children.filter((v) => v.tag === 'pre');
 	expect(codeBocks.length).toBe(2);
 });
 
@@ -244,7 +244,7 @@ test('Build markdown with doc file imports', async () => {
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 
-	const demos = vnode.children.filter((vnode) => vnode.componentInstance);
+	const demos = vnode.children.filter((v) => v.componentInstance);
 	expect(demos.length).toBe(2);
 	expect(demos[0].tag.endsWith('Demo0')).toBe(true);
 	expect(demos[1].tag.endsWith('Demo1')).toBe(true);
@@ -261,7 +261,7 @@ test('Build markdown with buildDemos function', async () => {
 		</template>
 		\`\`\`
 	`, {
-		buildDemos(demoTag, files) {
+		buildDemos(demoTag) {
 			return demoTag;
 		},
 	});
@@ -270,4 +270,7 @@ test('Build markdown with buildDemos function', async () => {
 	expect(vnode.tag).toBe('div');
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
+
+	const demos = vnode.children.filter((v) => v.componentInstance);
+	expect(demos.length).toBe(1);
 });
