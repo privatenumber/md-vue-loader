@@ -1,8 +1,8 @@
-# mdvue-loader
+# md-vue-loader
 Webpack loader to import markdown files as Vue components. Compatible with vue-loader v15.
 
 ```bash
-npm install --save-dev mdvue-loader
+npm install --save-dev md-vue-loader
 ```
 
 **webpack.config.js**
@@ -14,7 +14,7 @@ module.exports = {
         test: /\.md.vue$/,
         use: [
           'vue-loader',
-          'mdvue-loader'
+          'md-vue-loader'
         ]
       }
     ]
@@ -28,7 +28,7 @@ You can inline `vue` codeblocks as inline demos by enabling the `buildDemos` opt
 
 ```js
 {
-  loader: 'mdvue-loader',
+  loader: 'md-vue-loader',
   options: {
     buildDemos: true
   }
