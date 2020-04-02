@@ -19,7 +19,7 @@ function build(input, loaderConfig = {}) {
 			mode: 'development',
 			resolveLoader: {
 				alias: {
-					'mdvue-loader': mdvueLoaderPath,
+					'md-vue-loader': mdvueLoaderPath,
 				},
 			},
 			module: {
@@ -33,7 +33,7 @@ function build(input, loaderConfig = {}) {
 						use: [
 							'vue-loader',
 							{
-								loader: 'mdvue-loader',
+								loader: 'md-vue-loader',
 								options: loaderConfig,
 							},
 						],
@@ -49,7 +49,7 @@ function build(input, loaderConfig = {}) {
 						// 		use: [
 						// 			'vue-loader',
 						// 			{
-						// 				loader: 'mdvue-loader',
+						// 				loader: 'md-vue-loader',
 						// 				options: {}
 						// 			},
 						// 		],
