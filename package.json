@@ -1,6 +1,6 @@
 {
   "name": "mdvue-loader",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Webpack loader to import markdown files as a Vue component",
   "keywords": [
     "vue",
