@@ -44,7 +44,7 @@
   "dependencies": {
     "hash-sum": "^2.0.0",
     "loader-utils": "^2.0.0",
-    "markdown-it": "^10.0.0",
+    "markdown-it": "^11.0.0",
     "outdent": "^0.7.1"
   }
 }
