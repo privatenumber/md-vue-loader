@@ -72,10 +72,21 @@ module.exports = {
 ```
 
 ### Multi-file demos
-Demos can be multi-file by:
-1. Naming a codeblock by prepending it with the filename in underscores
-2. Importing that file via the `doc` alias
+Demos can be multi-file by naming code-blocks by prepending it with the filename in wrapped in underscores. You can import these code-blocks within the `doc` alias.
 
+Name a code-block:
+````
+_HelloWorld.vue_
+```vue
+<template>
+    <div>
+        Hello World
+    </div>
+</template>
+```
+````
+
+Import the code-block from `doc/HelloWorld.vue`:
 ````
 ```vue
 <template>
@@ -94,13 +105,3 @@ export default {
 ```
 ````
 
-````
-_HelloWorld.vue_
-```vue
-<template>
-    <div>
-        Hello World
-    </div>
-</template>
-```
-````
