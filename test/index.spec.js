@@ -4,7 +4,7 @@ const outdent = require('outdent');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const fs = require('fs');
-const { ufs } = require('unionfs');
+const {ufs} = require('unionfs');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const Vue = require('vue');
@@ -88,7 +88,7 @@ function build(input, loaderConfig = {}) {
 }
 
 function run(src) {
-	const { default: Component } = eval(src);
+	const {default: Component} = eval(src);
 	const vm = new Vue(Component);
 	vm.$mount();
 	return vm._vnode;
@@ -137,7 +137,7 @@ test('Markdown-it plugins', async () => {
 		# Hello
 	`, {
 		markdownItPlugins: [
-			[require('markdown-it-anchor'), { permalink: true }],
+			[require('markdown-it-anchor'), {permalink: true}],
 		],
 	});
 	const vnode = run(built);
@@ -171,10 +171,9 @@ test('Build markdown with codeblock', async () => {
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 
-	const codeBocks = vnode.children.filter((v) => v.tag === 'pre');
+	const codeBocks = vnode.children.filter(v => v.tag === 'pre');
 	expect(codeBocks.length).toBe(2);
 });
-
 
 test('Build markdown with demo', async () => {
 	const built = await build(outdent`
@@ -244,7 +243,7 @@ test('Build markdown with doc file imports', async () => {
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 
-	const demos = vnode.children.filter((v) => v.componentInstance);
+	const demos = vnode.children.filter(v => v.componentInstance);
 	expect(demos.length).toBe(2);
 	expect(demos[0].tag.endsWith('Demo0')).toBe(true);
 	expect(demos[1].tag.endsWith('Demo1')).toBe(true);
@@ -271,6 +270,6 @@ test('Build markdown with buildDemos function', async () => {
 	expect(vnode.children[0].tag).toBe('h1');
 	expect(vnode.children[0].children[0].text).toBe('Hello');
 
-	const demos = vnode.children.filter((v) => v.componentInstance);
+	const demos = vnode.children.filter(v => v.componentInstance);
 	expect(demos.length).toBe(1);
 });
