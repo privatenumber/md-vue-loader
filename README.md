@@ -53,7 +53,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.md.vue$/,
+                test: /\.md$/,
                 use: [
                     'vue-loader',
 +                    {
