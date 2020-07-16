@@ -36,46 +36,71 @@ module.exports = {
 ## Examples
 
 ### Inlining Vue demos
-You can inline `vue` codeblocks as inline demos by enabling the `buildDemos` option.
+You can inline `vue` codeblocks like the following as inline-demos by enabling the `buildDemos` option.
 
-```js
-{
-  loader: 'md-vue-loader',
-  options: {
-    buildDemos: true
-  }
+````
+```vue
+<template>
+    <div>Hello world!</div>
+</template>
+```
+````
+
+To enable `buildDemos`, pass in options in your Webpack config:
+
+```diff
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.md.vue$/,
+                use: [
+                    'vue-loader',
++                    {
++                        loader: 'md-vue-loader',
++                        options: {
++                            buildDemos: true
++                        }
++                    }
+                ]
+            }
+        ]
+    },
+
+    /// ...
 }
 ```
-
-Pass in a function with the following signature to control how the component is inlined: `function (demoTag, files)`
-
 
 ### Multi-file demos
 Demos can be multi-file by:
 1. Naming a codeblock by prepending it with the filename in underscores
 2. Importing that file via the `doc` alias
 
+````
 ```vue
 <template>
-  <hello-world />
+    <hello-world />
 </template>
 
 <script>
 import HelloWorld from 'doc/HelloWorld.vue';
 
 export default {
-  components: {
-    HelloWorld
-  }
+    components: {
+        HelloWorld
+    }
 }
 </script>
 ```
+````
 
+````
 _HelloWorld.vue_
 ```vue
 <template>
-  <div>
-    Hello World
-  </div>
+    <div>
+        Hello World
+    </div>
 </template>
 ```
+````
