@@ -37,7 +37,7 @@ function build(input, loaderConfig = {}) {
 								options: loaderConfig,
 							},
 						],
-						// TODO: Eventually support
+						// Eventually support being able to parse different codeblocks (eg. js)
 						// Currently can't because vue-loader doesn't support
 						// oneOf: [
 						// 	{
@@ -88,7 +88,7 @@ function build(input, loaderConfig = {}) {
 }
 
 function run(src) {
-	const {default: Component} = eval(src);
+	const {default: Component} = eval(src); // eslint-disable-line no-eval
 	const vm = new Vue(Component);
 	vm.$mount();
 	return vm._vnode;
