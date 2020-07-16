@@ -50,6 +50,7 @@
     "xo": "^0.32.1"
   },
   "dependencies": {
+    "has-own-prop": "^2.0.0",
     "hash-sum": "^2.0.0",
     "loader-utils": "^2.0.0",
     "markdown-it": "^11.0.0",
