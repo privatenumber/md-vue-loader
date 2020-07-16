@@ -12,26 +12,30 @@
 npm i -D md-vue-loader
 ```
 
-### Setup
-**webpack.config.js**
-```js
+## 🚦 Quick Setup
+Add to your Webpack config:
+
+```diff
 module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.md.vue$/,
-        use: [
-          'vue-loader',
-          'md-vue-loader'
+    module: {
+        rules: [
++            {
++                test: /\.md.vue$/,
++                use: [
++                    'vue-loader',
++                    'md-vue-loader'
++                ]
++            }
         ]
-      }
-    ]
-  }
+    },
+
+    /// ...
 }
 ```
 
+## Examples
 
-### Inline demos
+### Inlining Vue demos
 You can inline `vue` codeblocks as inline demos by enabling the `buildDemos` option.
 
 ```js
