@@ -120,9 +120,9 @@ module.exports = {
                 test: /\.md$/,
                 use: [
                     'vue-loader',
-+                    {
-+                        loader: 'md-vue-loader',
-+                        options: {
+                    {
+                        loader: 'md-vue-loader',
+                        options: {
 +                            buildDemos(Tag, demoFiles) {
 +                                this.addComponent(['DemoCollapse', 'SrcFile'], 'vue-demo-collapse');
 +
@@ -137,8 +137,8 @@ module.exports = {
 +                                </demo-collapse>
 +                                `;
 +                            }
-+                        }
-+                    }
+                        }
+                    }
                 ]
             }
         ]
