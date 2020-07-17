@@ -3,9 +3,9 @@
 `md-vue-loader` is a Webpack loader to import Markdown files as Vue components.
 
 ## :raising_hand: Why?
-- **🙌 Decoupled from Vue** Compatible with any version of [Vue](https://github.com/vuejs/vue) (or [`vue-loader`](https://vue-loader.vuejs.org)/`vue-template-compiler`)!
-- **👩‍🎨 Vue code rendering** Opt intto rendering Vue code-ferences to inline Demos!
-- **⚙️ Customizable** Configure your demo to be syntax-highlighted, or wrapped in any component!
+- **🙌  Decoupled from Vue** Compatible with any version of [Vue](https://github.com/vuejs/vue) (or [`vue-loader`](https://vue-loader.vuejs.org)/`vue-template-compiler`)!
+- **👩‍🎨  Vue code rendering** Render Vue code-blocks to inline demos!
+- **⚙️  Customizable** Configure your demo to be syntax-highlighted, or wrapped in any component!
 
 ## :rocket: Install
 ```bash
