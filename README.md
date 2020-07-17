@@ -110,7 +110,7 @@ You might want more control over how your demo is inlined to have it wrapped for
 
 To configure the demo markup, you can pass in a function to control how the component is inlined: `function (demoTag, files)`. In the function context, you have access to `this.addComponent([...named imports], 'module-name')` to register external components.
 
-In this example, I use [`vue-demo-collapse`](https://www.npmjs.com/package/vue-demo-collapse) to wrap my demo with the expandable container with the source-code:
+In this example, I use [`vue-demo-collapse`](https://www.npmjs.com/package/vue-demo-collapse) to wrap my demo with an expandable container to show the source-code:
 
 ```diff
 module.exports = {
