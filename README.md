@@ -33,7 +33,7 @@ module.exports = {
 }
 ```
 
-## Examples
+## 👨🏻‍🏫 Examples
 
 ### Inlining Vue demos
 You can inline `vue` codeblocks like the following as inline-demos by enabling the `buildDemos` option.
@@ -147,3 +147,43 @@ module.exports = {
     /// ...
 }
 ```
+
+## ⚙️ Options
+
+- `buildDemos` (`Boolean`|`Function`)
+  - `Boolean` Renders Vue code-blocks as inline demos
+  - `Function(Tag, demoFiles)` Enable inline Vue demos and customize how they're inlined. Outputs the new template.
+    - `Tag` is the tag-name of the demo component. Make sure to use it in your output to output the demo.
+    - `demoFiles` (`Array`) contains all the source code releavnt to the demo
+
+- `markdownItOpts` (Object): An object to configure [MarkdownIt](https://www.npmjs.com/package/markdown-it) — the Markdown compiler
+_Example:_
+```js
+options: {
+    markdownItOpts: {
+        html: true,
+        linkify: true,
+        typographer: true,
+    }
+}
+```
+
+- `markdownItPlugins` (`Array`): An array of [MarkdownIt Plugins](https://www.npmjs.com/search?q=keywords:markdown-it-plugin).
+_Example:_
+```js
+const markdownItAnchor = require('markdown-it-anchor');
+
+...
+
+    options: {
+        markdownItPlugins: [
+            [markdownItAnchor, {
+                permalink: true,
+                permalinkBefore: true,
+                permalinkSymbol: '<img class="icon anchor-link" aria-hidden="true" src="../../assets/md-anchor-link.svg">'
+            }]
+        ]
+    }
+```
+
+
