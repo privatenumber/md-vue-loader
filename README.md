@@ -158,34 +158,32 @@ module.exports = {
 
 - `markdownItOpts` (Object): An object to configure [MarkdownIt](https://www.npmjs.com/package/markdown-it) — the Markdown compiler.
 
-_Example:_
-```js
-options: {
-    markdownItOpts: {
-        html: true,
-        linkify: true,
-        typographer: true,
-    }
-}
-```
+  _Example:_
+  ```js
+  options: {
+      markdownItOpts: {
+          html: true,
+          linkify: true,
+          typographer: true,
+      }
+  }
+  ```
 
 - `markdownItPlugins` (`Array`): An array of [MarkdownIt Plugins](https://www.npmjs.com/search?q=keywords:markdown-it-plugin).
 
-_Example:_
-```js
-const markdownItAnchor = require('markdown-it-anchor');
-
-...
-
-    options: {
-        markdownItPlugins: [
-            [markdownItAnchor, {
-                permalink: true,
-                permalinkBefore: true,
-                permalinkSymbol: '<img class="icon anchor-link" aria-hidden="true" src="../../assets/md-anchor-link.svg">'
-            }]
-        ]
-    }
-```
-
-
+  _Example:_
+  ```js
+  const markdownItAnchor = require('markdown-it-anchor');
+  
+  ...
+  
+      options: {
+          markdownItPlugins: [
+              [markdownItAnchor, {
+                  permalink: true,
+                  permalinkBefore: true,
+                  permalinkSymbol: '<img class="icon anchor-link" aria-hidden="true" src="../../assets/md-anchor-link.svg">'
+              }]
+          ]
+      }
+  ```
