@@ -105,3 +105,45 @@ export default {
 ```
 ````
 
+### Wrapping demos in custom markup
+You might want more control over how your demo is inlined to have it wrapped for styling, or to have the source-code next to it.
+
+To configure the demo markup, you can pass in a function to control how the component is inlined: `function (demoTag, files)`. In the function context, you have access to `this.addComponent([...named imports], 'module-name')` to register external components.
+
+In this example, I use [`vue-demo-collapse`](https://www.npmjs.com/package/vue-demo-collapse) to wrap my demo with the expandable container with the source-code:
+
+```diff
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.md$/,
+                use: [
+                    'vue-loader',
++                    {
++                        loader: 'md-vue-loader',
++                        options: {
++                            buildDemos(Tag, demoFiles) {
++                                this.addComponent(['DemoCollapse', 'SrcFile'], 'vue-demo-collapse');
++
++                                const listFiles = demoFiles
++                                    .map((file) => `<src-file name="${file.name || ''}" language="html"><template v-pre>${ent.encode(file.content)}</template></src-file>`)
++                                    .join('');
++
++                                return `
++                                <demo-collapse>
++                                    ${Tag}
++                                    ${listFiles}
++                                </demo-collapse>
++                                `;
++                            }
++                        }
++                    }
+                ]
+            }
+        ]
+    },
+
+    /// ...
+}
+```
