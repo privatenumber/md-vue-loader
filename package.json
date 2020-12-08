@@ -47,7 +47,7 @@
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.43.0",
-    "xo": "^0.32.1"
+    "xo": "^0.36.1"
   },
   "dependencies": {
     "has-own-prop": "^2.0.0",
