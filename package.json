@@ -1,63 +1,63 @@
 {
-  "name": "md-vue-loader",
-  "version": "2.0.0",
-  "description": "Webpack loader to import markdown files as a Vue component",
-  "keywords": [
-    "vue",
-    "webpack",
-    "loader",
-    "markdown",
-    "md"
-  ],
-  "main": "lib/index.js",
-  "files": [
-    "lib"
-  ],
-  "scripts": {
-    "test": "jest",
-    "dev": "jest --watchAll",
-    "lint": "eslint ."
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": "eslint --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/privatenumber/md-vue-loader.git"
-  },
-  "author": "Hiroki Osame",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/privatenumber/md-vue-loader/issues"
-  },
-  "homepage": "https://github.com/privatenumber/md-vue-loader#readme",
-  "devDependencies": {
-    "@pvtnbr/eslint-config": "^0.38.0",
-    "eslint": "^8.56.0",
-    "husky": "^4.2.5",
-    "jest": "^26.1.0",
-    "lint-staged": "^10.2.11",
-    "markdown-it-anchor": "^5.3.0",
-    "memory-fs": "^0.5.0",
-    "unionfs": "^4.4.0",
-    "vue": "^2.6.11",
-    "vue-loader": "^15.9.3",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.43.0"
-  },
-  "dependencies": {
-    "has-own-prop": "^2.0.0",
-    "hash-sum": "^2.0.0",
-    "loader-utils": "^2.0.0",
-    "markdown-it": "^11.0.0",
-    "outdent": "^0.7.1"
-  },
-  "eslintConfig": {
-    "extends": "@pvtnbr"
-  }
+	"name": "md-vue-loader",
+	"version": "2.0.0",
+	"description": "Webpack loader to import markdown files as a Vue component",
+	"keywords": [
+		"vue",
+		"webpack",
+		"loader",
+		"markdown",
+		"md"
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/privatenumber/md-vue-loader.git"
+	},
+	"author": "Hiroki Osame",
+	"files": [
+		"lib"
+	],
+	"main": "lib/index.js",
+	"scripts": {
+		"test": "jest",
+		"dev": "jest --watchAll",
+		"lint": "eslint ."
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.js": "eslint --fix"
+	},
+	"bugs": {
+		"url": "https://github.com/privatenumber/md-vue-loader/issues"
+	},
+	"homepage": "https://github.com/privatenumber/md-vue-loader#readme",
+	"dependencies": {
+		"has-own-prop": "^2.0.0",
+		"hash-sum": "^2.0.0",
+		"loader-utils": "^2.0.0",
+		"markdown-it": "^11.0.0",
+		"outdent": "^0.7.1"
+	},
+	"devDependencies": {
+		"@pvtnbr/eslint-config": "^0.38.0",
+		"eslint": "^8.56.0",
+		"husky": "^4.2.5",
+		"jest": "^26.1.0",
+		"lint-staged": "^10.2.11",
+		"markdown-it-anchor": "^5.3.0",
+		"memory-fs": "^0.5.0",
+		"unionfs": "^4.4.0",
+		"vue": "^2.6.11",
+		"vue-loader": "^15.9.3",
+		"vue-template-compiler": "^2.6.11",
+		"webpack": "^4.43.0"
+	},
+	"eslintConfig": {
+		"extends": "@pvtnbr/eslint-config/node"
+	}
 }

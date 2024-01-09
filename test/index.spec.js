@@ -1,10 +1,10 @@
 const mdvueLoaderPath = require.resolve('..');
 
+const fs = require('fs');
 const outdent = require('outdent');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
-const fs = require('fs');
-const {ufs} = require('unionfs');
+const { ufs } = require('unionfs');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const Vue = require('vue');
@@ -71,9 +71,9 @@ function build(input, loaderConfig = {}) {
 		compiler.inputFileSystem = ufs.use(fs).use(mfs);
 		compiler.outputFileSystem = mfs;
 
-		compiler.run((err, stats) => {
-			if (err) {
-				reject(err);
+		compiler.run((error, stats) => {
+			if (error) {
+				reject(error);
 				return;
 			}
 
@@ -88,7 +88,7 @@ function build(input, loaderConfig = {}) {
 }
 
 function run(src) {
-	const {default: Component} = eval(src); // eslint-disable-line no-eval
+	const { default: Component } = eval(src); // eslint-disable-line no-eval
 	const vm = new Vue(Component);
 	vm.$mount();
 	return vm._vnode;
@@ -137,7 +137,8 @@ test('Markdown-it plugins', async () => {
 		# Hello
 	`, {
 		markdownItPlugins: [
-			[require('markdown-it-anchor'), {permalink: true}],
+			// eslint-disable-next-line n/global-require
+			[require('markdown-it-anchor'), { permalink: true }],
 		],
 	});
 	const vnode = run(built);
