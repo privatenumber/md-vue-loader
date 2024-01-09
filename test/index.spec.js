@@ -5,7 +5,7 @@ const outdent = require('outdent');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const { ufs } = require('unionfs');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 const Vue = require('vue');
 
