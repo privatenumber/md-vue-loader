@@ -16,7 +16,7 @@
   "scripts": {
     "test": "jest",
     "dev": "jest --watchAll",
-    "lint": "xo"
+    "lint": "eslint ."
   },
   "husky": {
     "hooks": {
@@ -24,7 +24,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "xo --fix"
+    "*.js": "eslint --fix"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,8 @@
   },
   "homepage": "https://github.com/privatenumber/md-vue-loader#readme",
   "devDependencies": {
+    "@pvtnbr/eslint-config": "^0.38.0",
+    "eslint": "^8.56.0",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
@@ -46,8 +48,7 @@
     "vue": "^2.6.11",
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.43.0",
-    "xo": "^0.32.1"
+    "webpack": "^4.43.0"
   },
   "dependencies": {
     "has-own-prop": "^2.0.0",
@@ -55,5 +56,8 @@
     "loader-utils": "^2.0.0",
     "markdown-it": "^11.0.0",
     "outdent": "^0.7.1"
+  },
+  "eslintConfig": {
+    "extends": "@pvtnbr"
   }
 }
